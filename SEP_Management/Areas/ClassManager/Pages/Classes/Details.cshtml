@@ -1,0 +1,254 @@
+﻿@page
+@model SEP_Management.Areas.ClassManager.Pages.Classes.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Details</h1>
+
+<div>
+    <h4>Class</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.ClassCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.ClassCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.ClassDetails)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.ClassDetails)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.SemesterId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.SemesterId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.SubjectId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.SubjectId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.ManagerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.ManagerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.UpdatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.UpdatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.GitlabId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.GitlabId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.AccessToken)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.AccessToken)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Class.UpdatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Class.UpdatedAt)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Class?.ClassId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+ *@
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+
+
+
+<div class="container-fluid">
+    <div class="layout-specing">
+        <div class="d-md-flex justify-content-between">
+            <h5 class="mb-0">Assigned Class Setting</h5>
+
+            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
+                <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="classManager">Assigned Classes Management</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Assigned Class Setting</li>
+                </ul>
+            </nav>
+        </div>
+
+
+
+        <div class="card bg-white rounded shadow overflow-hidden mt-4 border-0">
+            <div class="avatar-profile d-flex margin-nagative mt-n5 position-relative ps-3">
+
+                <div class="mt-4 ms-3 pt-3">
+                    <h3 class="mt-3">@Model.Class.ClassCode</h3>
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-justified flex-column flex-sm-row rounded shadow overflow-hidden bg-light"
+                id="pills-tab" role="tablist">
+
+                <!--Tab 1(row)-->
+                
+                <li class="nav-item">
+                    <a class="nav-link rounded-0 active"
+                       id="review-tab"
+                       data-bs-toggle="pill"
+                       href="#"
+                       role="tab"
+                       aria-controls="pills-review"
+                       aria-selected="false">
+                        <div class="text-center pt-1 pb-1">
+                            <h4 class="title fw-normal mb-0">
+                                General
+                            </h4>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/Subjects/Details" asp-area="ClassManager" asp-route-id="@Model.Class.Subject?.SubjectId">
+                        <div class="text-body pt-1 pb-1">
+                            <h4 class="title fw-normal mb-0">
+                                Class Setting
+                            </h4>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a asp-page="/Assignments/Index" asp-area="ClassManager" asp-route-subjectId="@Model.Class.Subject?.SubjectId">
+                        <div class="text-body pt-1 pb-1">
+                            <h4 class="title fw-normal mb-0">
+                                Class Assignments
+                            </h4>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-page="ClassStudent" asp-route-classId="@Model.Class.ClassId">
+                        <div class="text-body pt-1 pb-1">
+                            <h4 class="title fw-normal mb-0">
+                                Class Students
+                            </h4>
+                        </div>
+                    </a>
+                </li>
+
+                <!--Tab 3(row)-->
+                <li class="nav-item">
+                    <a href="#">
+                        <div class="text-body pt-1 pb-1">
+                            <h4 class="title fw-normal mb-0">
+                                Issue Setting
+                            </h4>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <div class="card border-0 rounded-0 p-2">
+                        <div class="tab-content mt-2" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-overview" role="tabpanel"
+                                 aria-labelledby="overview-tab">
+                                <form method="post" class="mt-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Class Code</label>
+                                                <input name="name" id="name" type="text"
+                                                       class="form-control"
+                                                       value="@Model.Class.ClassCode" readonly>
+                                            </div>
+                                        </div><!--end col-->
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Git URL:</label>
+                                                <input asp-for="Class.GitlabId" id="name2" type="text"
+                                                       class="form-control"
+                                                       value="@Model.Class.GitlabId"
+                                                       placeholder="Gitlab URL....">
+                                            </div>
+                                        </div><!--end col-->
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">AccessToken:</label>
+                                                <input asp-for="Class.AccessToken" id="name2" type="password"
+                                                       class="form-control"
+                                                       value="@Model.Class.AccessToken"
+                                                       placeholder="Access Token....">
+                                                       <input type="hidden" asp-for="Class.ClassId" value="@Model.Class.ClassId" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Description</label>
+                                                <textarea asp-for="Class.ClassDetails" id="comments"
+                                                          rows="4" class="form-control">@Model.Class.ClassDetails</textarea>
+                                            </div>
+                                        </div>
+                                    </div><!--end row-->
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <a class="btn btn-primary" asp-page="Index">Back</a>
+                                        </div><!--end col-->
+                                        <div class="col-sm-12 col-md-6">
+                                            <input style="float:right" type="submit" id="submit" name="send"
+                                                   class="btn btn-success"
+                                                   value="Save changes">
+                                        </div><!--end col-->
+                                    </div><!--end row-->
+                                </form><!--end form-->
+                            </div><!--end teb pane-->
+                        </div><!--end tab content-->
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div>
+    </div>
+</div><!--end container-->

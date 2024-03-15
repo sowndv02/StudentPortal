@@ -1,0 +1,294 @@
+﻿@page
+@model SEP_Management.Areas.ClassManager.Pages.Subjectss.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Details</h1>
+
+<div>
+    <h4>Subject</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.SubjectCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.SubjectCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.IsActive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.IsActive)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.UpdatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.UpdatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.TimeAllocation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.TimeAllocation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.PassGrade)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.PassGrade)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.CreatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.CreatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.UpdatedAt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.UpdatedAt)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subject.Manager)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subject.Manager.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Subject?.SubjectId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+ *@
+
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="layout-specing">
+
+        <div class="d-md-flex justify-content-between">
+            <c:forEach items="${listDetails}" var="sd">
+                <h1 class="mb-0">Subject setting of @Model.Subject.SubjectCode</h1>
+
+                <nav aria-label="breadcrumb"
+                     class="d-inline-block mt-4 mt-sm-0">
+                    <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-page="Index">
+                                Subject
+                                List
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active"
+                            aria-current="page">@Model.Subject.SubjectCode</li>
+                    </ul>
+                </nav>
+            </c:forEach>
+        </div>
+
+
+        <div class="card bg-white rounded shadow overflow-hidden mt-4 border-0">
+
+
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <div class="card border-0 rounded-0 p-4">
+
+
+                        <!--Tab list-->
+                        <ul class="nav nav-pills nav-justified flex-column flex-sm-row rounded shadow overflow-hidden bg-light"
+                            id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link rounded-0 active"
+                                   id="review-tab"
+                                   data-bs-toggle="pill"
+                                   asp-page="Details" asp-route-id="@Model.Subject.SubjectId"
+                                   role="tab"
+                                   aria-controls="pills-review"
+                                   aria-selected="false">
+                                    <div class="text-center pt-1 pb-1">
+                                        <h4 class="title fw-normal mb-0">
+                                            General
+                                        </h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <!--Tab 1(row)-->
+                            <!--Tab 2(row)-->
+
+                            <li class="nav-item">
+                                <a asp-page="/Assignments/Index" asp-area="ClassManager" asp-route-subjectId="@Model.Subject.SubjectId">
+                                    <div class="text-body pt-1 pb-1">
+                                        <h4 class="title fw-normal mb-0">
+                                            Assignments
+                                        </h4>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <!--Tab 3(row)-->
+                            <li class="nav-item">
+                                <a class="nav-link rounded-0"
+                                   id="review-tab"
+                                   data-bs-toggle="pill"
+                                   href="#"
+                                   role="tab"
+                                   aria-controls="pills-review"
+                                   aria-selected="false">
+                                    <div class="text-center pt-1 pb-1">
+                                        <h4 class="title fw-normal mb-0">
+                                            Subject Setting
+                                        </h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subject Name</label>
+                                        <input pattern=".{3,20}" title="must be 3 to 20 characters" asp-for="Subject.SubjectName" id="part" type="text" class="form-control" value="@Model.Subject.SubjectName" required="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subject Code</label>
+                                        <input pattern=".{3,20}" title="must be 3 to 20 characters" asp-for="Subject.SubjectCode" id="weight" type="text" class="form-control" placeholder="" value="@Model.Subject.SubjectCode">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Min grade to pass</label>
+                                        <input asp-for="Subject.PassGrade" id="weight" type="text" class="form-control" placeholder="" value="@Model.Subject.PassGrade">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <select asp-for="Subject.IsActive" asp-items="ViewBag.Status" required class="form-select" id="">
+                                            <option value="" hidden="">Select status:</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Manager</label>
+                                        <select asp-for="Subject.ManagerId " asp-items="ViewBag.Managers" required class="form-select" id="">
+                                            <option value="" hidden="">Select Manager:</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subject Description</label>
+                                        <textarea asp-for="Subject.Description" id="Description" rows="4" class="form-control">@Model.Subject.Description</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" asp-for="Subject.SubjectId" value="@Model.Subject.SubjectId">
+                        <a id="back-button" class="btn btn-primary">Back</a>
+                        <script>
+                            document.getElementById("back-button").addEventListener("click", function () {
+                                window.history.back();
+                            });
+                        </script>
+                        <script type="text/javascript">
+                            function displayToast(message, isSuccess) {
+                                var toast = document.getElementById("toast");
+                                toast.innerHTML = message;
+                                if (isSuccess) {
+                                    toast.style.backgroundColor = "#4CAF50";  // Green color for success
+                                } else {
+                                    toast.style.backgroundColor = "#F44336";  // Red color for failure
+                                }
+                                toast.style.display = "block";
+                                setTimeout(function () {
+                                    toast.style.display = "none";
+                                }, 2000);  // Display the toast for 3 seconds
+                            }
+                        </script>
+                        <div id="toast"></div>
+                        <div class="table-responsive bg-white shadow rounded">
+                            <script type="text/javascript">
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var urlParams = new URLSearchParams(window.location.search);
+                                    var success = urlParams.get("success");
+                                    if (success === "true") {
+                                        displayToast("updated successfully!", true);
+                                    } else if (success === "false") {
+                                        displayToast("Failed to update!", false);
+                                    } else if (success === "true1") {
+                                        displayToast("Added successfully!", true);
+                                    } else if (success === "false1") {
+                                        displayToast("Failed to add!", false);
+                                    }
+                                });
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PAGINATION START -->
+            @* <div class="col-12 mt-4">
+            <div class="d-md-flex align-items-center text-center justify-content-between">
+            <span class="text-muted me-3">
+            Showing 1 - 10 out of
+            50
+            </span>
+            <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
+            <c:forEach begin="1" end="${endSubSetting}" var="i">
+            <li class="page-item">
+            <a class="page-link"
+            href="manageSubjectController?service=displaySubjectSetting&index=${i}&subjectID=${pagingSubject2.subject_id}">${i}</a>
+            </li>
+            </c:forEach>
+            </ul>
+            </div>
+            </div> *@
+            <!-- PAGINATION END -->
+        </div>
+    </div>
+
+

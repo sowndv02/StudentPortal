@@ -1,0 +1,460 @@
+﻿@page
+@model SEP_Management.Areas.Admin.Pages.Classes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ClassCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ClassDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].SemesterId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].SubjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ManagerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].GitlabId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].AccessToken)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Class) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SemesterId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GitlabId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessToken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="container-fluid">
+    <div class="layout-specing">
+        <div class="row">
+            <div class="col-xl-9 col-md-2">
+                <h5 class="mb-0">Class Management</h5>
+
+                <nav aria-label="breadcrumb" class="d-inline-block mt-2">
+                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="UserController?service=listAll">Class Management</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Class list</li>
+                    </ul>
+                </nav>
+            </div><!--end col-->
+
+        </div><!--end row-->
+        <div class="row" style="display: flex; justify-content: space-between;">
+
+            <div class="col-md-2 mt-5" style="float:right">
+                <form action="ClassController">
+                    <input type="hidden" name="service" value="filterSemester">
+                    <div class="row ">
+                        <div class="">
+                            <select name="checkSemester" class="form-select" id="checkSemester" onchange="this.form.submit()">
+                                <option value="" hidden="">Semester Filter:</option>
+                                <option value="display">All</option>
+                                    <option value="${st.settingId}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-2 mt-5" style="float:right">
+                <form action="ClassController">
+                    <input type="hidden" name="service" value="filterSubject">
+                    <div class="row ">
+                        <div class="">
+                            <select name="checkSubject" class="form-select" id="checkSubject" onchange="this.form.submit()">
+                                <option value="" hidden="">Subject Filter:</option>
+                                <option value="display">All</option>
+                                    <option value="${sb.subjectId}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-2 mt-5" style="float:right">
+                <form action="ClassController">
+                    <input type="hidden" name="service" value="filterTeacher">
+                    <div class="row ">
+                        <div class="">
+                            <select name="checkTeacher" class="form-select" id="checkTeacher" onchange="this.form.submit()">
+                                <option value="" hidden="">Teacher Filter:</option>
+                                <option value="display">All</option>
+                                    <option value="${us.userId}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-2 mt-5" style="float:right">
+                <form action="ClassController">
+                    <input type="hidden" name="service" value="filterStatus">
+                    <div class="row ">
+                        <div class="">
+                            <select name="checkStatus" class="form-select" id="checkStatus" onchange="this.form.submit()">
+                                <option value="" hidden="">Status Filter:</option>
+                                <option value="display">All</option>
+                                <option value="2">Pending</option>
+                                <option value="1">Started</option>
+                                <option value="0">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="search-bar p-0 d-none d-lg-block col-md-2 mt-5">
+                <div id="search" class="menu-search mb-0">
+                    <form role="search" method="post" id="searchform" class="searchform" action="ClassController?service=searchName">
+                        <div>
+                            <input value="" type="text" class="form-control border rounded-pill" name="name" id="name" placeholder="Search Keywords...">
+                            <input type="submit" id="searchsubmit" value="Search">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-md-end col-md-2 mt-5">
+                <a asp-page="Create" class="btn btn-primary">Add New Class</a>
+            </div><!--end col-->
+
+        </div>
+        <div class="table-responsive bg-white shadow rounded">
+
+            <table id="myTable" class="table mb-0 table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(1)" class="border-bottom p-3" style="min-width: 180px; cursor: pointer">
+                            Class Code<i class="uil uil-sort"></i>
+                        </th>
+                        <th onclick="sortTable(2)" class="border-bottom p-3" style="min-width: 150px; cursor: pointer;">
+                            Semester<i class="uil uil-sort"></i>
+                        </th>
+                        <th onclick="sortTable(3)" class="border-bottom p-3" style="min-width: 150px; cursor: pointer;">
+                            Subject<i class="uil uil-sort"></i>
+                        </th>
+                        <th onclick="sortTable(4)" class="border-bottom p-3" style="min-width: 150px; cursor: pointer;">
+                            Teacher<i class="uil uil-sort"></i>
+                        </th>
+                        <th onclick="sortTable(5)" class="border-bottom p-3" style="min-width: 130px; cursor: pointer;">
+                            Status<i class="uil uil-sort"></i>
+                        </th>
+                        <th class="border-bottom p-3" style="min-width: 50px;">Actions</th>
+                    </tr>
+                </thead>
+
+
+                    <tbody>
+                    @foreach(var item in Model.Classes)
+                    {
+                        <tr>
+                            <td class="p-3">
+                                <a href="#" class="text-dark">
+                                    <div class="d-flex align-items-center">
+                                        <span class="ms-2">
+                                            @item.ClassCode
+                                        </span>
+                                    </div>
+                                </a>
+                            </td>
+
+                            <td class="p-3">
+                                @item.Semester?.Name
+                            </td>
+
+                            <td class="p-3">
+                                @item.Subject?.SubjectCode
+                            </td>
+
+                            <td class="p-3">
+                                @item.Manager?.FullName
+                            </td>
+                            @if(item.Status == 0)
+                            {
+                                <td><span class="badge bg-soft-danger">Closed</span></td>
+                            }
+                            else if(item.Status == 1)
+                            {
+                                <td><span class="badge bg-soft-success">Started</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="badge bg-soft-warning">Pending</span></td>
+                            }
+
+                            <td class="p-3">
+                                    <a asp-page="Edit" asp-route-id="@item.ClassId"
+                                   class="btn btn-icon btn-pills btn-soft-primary"><i class="uil uil-pen"></i></a>
+                                    @if (item.Status ==2)
+                                    {
+                                        <a data-bs-toggle="modal" data-bs-target="#start-@item.ClassId"
+                                           class="btn btn-icon btn-pills btn-soft-success"
+                                           title="Start">
+                                            <i class="uil uil-play"></i>
+                                        </a>
+                                        <a data-bs-toggle="modal" data-bs-target="#delete-@item.ClassId"
+                                           class="btn btn-icon btn-pills btn-soft-danger"
+                                           title="Delete">
+                                            <i class="uil uil-trash-alt"></i>
+                                        </a>
+                                        <div class="modal" id="start-@item.ClassId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg w modal-dialog-centered " style="width:400px;">
+                                                <div class="modal-content p-3">
+
+                                                    <div class="modal-body border-0 text-center p-2">
+                                                        <h1 class="text-success display-1"><i class="uil uil-play"></i></h1>
+                                                        <h4 class="modal-title" id="exampleModalLabel">Are you sure</h4>
+                                                        <p>Do you really want to start this class? This process cannot be undone.</p>
+                                                    </div>
+                                                    <div class="modal-footer border-0 align-items-center justify-content-center">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <a asp-page="Edit" asp-route-id="@item.ClassId" asp-page-handler="ChangeStatus" asp-route-status="Pending" type="button" class="btn btn-success">Start</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal" id="delete-@item.ClassId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg w modal-dialog-centered " style="width:400px;">
+                                                <div class="modal-content p-3">
+
+                                                    <div class="modal-body border-0 text-center p-2">
+                                                        <h1 class="text-danger display-1"><i class="ri-close-circle-line"></i></h1>
+                                                        <h4 class="modal-title" id="exampleModalLabel">Are you sure</h4>
+                                                        <p>Do you really want to delete this class? This process cannot be undone.</p>
+                                                    </div>
+                                                    <div class="modal-footer border-0 align-items-center justify-content-center">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <form asp-page="Index" asp-page-handler="Delete" method="post">
+                                                            <input type="hidden" asp-for="Class.ClassId" value="@item.ClassId" />
+                                                            <button  type="submit" class="btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }else if(item.Status == 1)
+                                    {
+                                        <a data-bs-toggle="modal" data-bs-target="#close-@item.ClassId"
+                                           class="btn btn-icon btn-pills btn-soft-danger"
+                                           title="Close ">
+                                            <i class="uil uil-ban"></i>
+                                        </a>
+                                        <div class="modal" id="close-@item.ClassId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg w modal-dialog-centered " style="width:400px;">
+                                                <div class="modal-content p-3">
+
+                                                    <div class="modal-body border-0 text-center p-2">
+                                                        <h1 class="text-danger display-1"><i class="uil uil-ban"></i></h1>
+                                                        <h4 class="modal-title" id="exampleModalLabel">Are you sure</h4>
+                                                        <p>Do you really want to Close this class? This process cannot be undone.</p>
+                                                    </div>
+                                                    <div class="modal-footer border-0 align-items-center justify-content-center">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <a asp-page="Edit" asp-route-id="@item.ClassId" asp-page-handler="ChangeStatus" asp-route-status="Active" id="close-button" type="button" class="btn btn-danger">Close</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                            </td>
+                        </tr>
+                    }
+                    
+
+                </tbody>
+            </table>
+
+        </div>
+
+        @* <div class="row text-center">
+            <div class="col-12 mt-4">
+                <div class="d-md-flex align-items-center text-center justify-content-between">
+                    <span class="text-muted me-3"></span>
+                    <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
+                        <c:forEach begin="1" end="${endP}" var="i">
+                            <li class="page-item"><a class="page-link" href="ClassController?listAll&index=${i}">${i}</a></li>
+
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div><!--end col-->
+        </div> *@
+
+
+
+    </div>
+    <div class="modal fade" id="addform" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-bottom p-3">
+                    <h5 class="modal-title" id="exampleModalLabel">Add new Class</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-3 pt-4">
+                    <form id="add-form" action="ClassController" enctype="multipart/form-data">
+                        <div class="row" class="mt-4">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="name">Class Code<span class="text-danger">*</span></label>
+                                    <input name="code" id="code" type="text" required class="form-control" placeholder="Class Code :">
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="semester">Semester</label>
+                                    <select class="form-select " name="semester" id="semester">
+                                         <option value="${st2.settingId}"></option>
+                                    </select>
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Subject</label>
+                                    <select class="form-select " name="subject">
+                                        <option value="${sb2.subjectId}"></option>
+                                    </select>
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="manager">Teacher</label>
+                                    <select class="form-select " name="manager">
+                                        <option value="${us2.userId}">${us2.fullName}</option>
+                                    </select>
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-md-6" style="display:grid">
+                                <div class="mb-3">
+                                    <div class="row ms-3">
+                                        <div class="form-check col-md-4">
+                                            <label class="form-check-label">Pending</label>
+                                            <input class="form-check-input" type="radio" name="status" value="0" checked>
+                                        </div>
+                                        <div class="form-check col-md-4">
+                                            <label class="form-check-label">Started</label>
+                                            <input class="form-check-input" type="radio" name="status" value="1">
+
+                                        </div>
+                                        <div class="form-check col-md-4">
+                                            <label class="form-check-label">Closed</label>
+                                            <input class="form-check-input" type="radio" name="status" value="2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--end col-->
+
+
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="details">Details</label>
+                                    <textarea name="details" id="details" rows="3" class="form-control" placeholder="Details :"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 d-grid">
+                                <button type="submit" name="submit2" value=" " class="btn btn-primary">Add class</button>
+                            </div>
+                        </div><!--end row-->
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Add New Appointment End -->
+    </div>
+</div><!--end container-->

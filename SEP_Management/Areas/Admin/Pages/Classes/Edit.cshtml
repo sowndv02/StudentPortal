@@ -1,0 +1,175 @@
+﻿@page
+@model SEP_Management.Areas.Admin.Pages.Classes.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Edit</h1>
+
+<h4>Class</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Class.ClassId" />
+            <div class="form-group">
+                <label asp-for="Class.ClassCode" class="control-label"></label>
+                <input asp-for="Class.ClassCode" class="form-control" />
+                <span asp-validation-for="Class.ClassCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.ClassDetails" class="control-label"></label>
+                <input asp-for="Class.ClassDetails" class="form-control" />
+                <span asp-validation-for="Class.ClassDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.SemesterId" class="control-label"></label>
+                <input asp-for="Class.SemesterId" class="form-control" />
+                <span asp-validation-for="Class.SemesterId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.SubjectId" class="control-label"></label>
+                <input asp-for="Class.SubjectId" class="form-control" />
+                <span asp-validation-for="Class.SubjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.ManagerId" class="control-label"></label>
+                <input asp-for="Class.ManagerId" class="form-control" />
+                <span asp-validation-for="Class.ManagerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.Status" class="control-label"></label>
+                <input asp-for="Class.Status" class="form-control" />
+                <span asp-validation-for="Class.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.CreatedBy" class="control-label"></label>
+                <input asp-for="Class.CreatedBy" class="form-control" />
+                <span asp-validation-for="Class.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.UpdatedBy" class="control-label"></label>
+                <input asp-for="Class.UpdatedBy" class="form-control" />
+                <span asp-validation-for="Class.UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.GitlabId" class="control-label"></label>
+                <input asp-for="Class.GitlabId" class="form-control" />
+                <span asp-validation-for="Class.GitlabId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.AccessToken" class="control-label"></label>
+                <input asp-for="Class.AccessToken" class="form-control" />
+                <span asp-validation-for="Class.AccessToken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.CreatedAt" class="control-label"></label>
+                <input asp-for="Class.CreatedAt" class="form-control" />
+                <span asp-validation-for="Class.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.UpdatedAt" class="control-label"></label>
+                <input asp-for="Class.UpdatedAt" class="form-control" />
+                <span asp-validation-for="Class.UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div> *@
+
+
+
+
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+<form class="mt-4" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Class Code:</label>
+                <input asp-for="Class.ClassCode" type="text" class="form-control" />
+            </div>
+        </div><!--end col-->
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Status:</label>
+                @if(Model.Class.Status == 0)
+                {
+                    <input readonly="" type="hidden" class="form-control" value="0" asp-for="Class.Status" />
+                    <input readonly=""  class="form-control" value="Closed" />
+                }
+                else
+                {
+                    <select asp-for="Class.Status" asp-items="ViewBag.Status" required class="form-select" id="">
+                        <option value="" hidden="">Select status:</option>
+                    </select>
+                }
+                <input readonly="" type="hidden" class="form-control" value="@Model.Class.ClassId" asp-for="Class.ClassId" />
+            </div>
+        </div><!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Semester:</label>
+                <select asp-for="Class.SemesterId" asp-items="ViewBag.Semesters" class="form-select" id="">
+                    <option value="" hidden="">Select Semester:</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Subject:</label>
+                <select asp-for="Class.SubjectId" asp-items="ViewBag.Subjects" class="form-select" id="">
+                    <option value="" hidden="">Select Subject:</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Teacher:</label>
+                <select asp-for="Class.ManagerId" asp-items="ViewBag.Managers" class="form-select" id="">
+                    <option value="" hidden="">Select Manager:</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Details:</label>
+                <textarea asp-for="Class.ClassDetails" id="comments" rows="4" class="form-control"></textarea>
+            </div>
+        </div>
+    </div><!--end row-->
+
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <a asp-page="Index" name="submit" class="btn btn-primary">Back</a>
+        </div><!--end col-->
+        <div class="col-sm-12 col-md-3">
+            <button style="float:right" type="submit" name="submit" class="btn btn-success">Save changes</button>
+        </div>
+    </div><!--end row-->
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,136 @@
+﻿@page
+@model SEP_Management.Areas.Admin.Pages.Subjects.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Create</h1>
+
+<h4>Subject</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Subject.SubjectCode" class="control-label"></label>
+                <input asp-for="Subject.SubjectCode" class="form-control" />
+                <span asp-validation-for="Subject.SubjectCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.SubjectName" class="control-label"></label>
+                <input asp-for="Subject.SubjectName" class="form-control" />
+                <span asp-validation-for="Subject.SubjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.ManagerId" class="control-label"></label>
+                <select asp-for="Subject.ManagerId" class ="form-control" asp-items="ViewBag.ManagerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.IsActive" class="control-label"></label>
+                <input asp-for="Subject.IsActive" class="form-control" />
+                <span asp-validation-for="Subject.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.CreatedBy" class="control-label"></label>
+                <input asp-for="Subject.CreatedBy" class="form-control" />
+                <span asp-validation-for="Subject.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.UpdatedBy" class="control-label"></label>
+                <input asp-for="Subject.UpdatedBy" class="form-control" />
+                <span asp-validation-for="Subject.UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.Description" class="control-label"></label>
+                <input asp-for="Subject.Description" class="form-control" />
+                <span asp-validation-for="Subject.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.TimeAllocation" class="control-label"></label>
+                <input asp-for="Subject.TimeAllocation" class="form-control" />
+                <span asp-validation-for="Subject.TimeAllocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.PassGrade" class="control-label"></label>
+                <input asp-for="Subject.PassGrade" class="form-control" />
+                <span asp-validation-for="Subject.PassGrade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div> *@
+
+
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+
+<div class="container-fluid" style="max-width: 850px">
+    <div class="layout-specing">
+                <div style="border-radius: 7px" class="container mt-4 bg-white shadow p-4">
+                    <h1 class="mb-4">Add Subject</h1>
+
+                    @* <div class="alert alert-danger">
+                    </div> *@
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="subject_code" class="form-label">Subject Code<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="subject_code" asp-for="Subject.SubjectCode" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject_name" class="form-label">Subject Name<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="subject_name" asp-for="Subject.SubjectName" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="manager" class="form-label">Manager<span class="text-danger"> *</span></label>
+                            <select asp-for="Subject.ManagerId" asp-items="Model.ManagerList" class="form-select" id="manager"></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status<span class="text-danger"> *</span></label>
+                            <select asp-for="Subject.IsActive" asp-items="Model.ActiveList" class="form-select" id="status"></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pass_grade" class="form-label">Pass grade<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="pass_grade" asp-for="Subject.PassGrade" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="time_allocation" class="form-label">Time allocation<span class="text-danger"> *</span></label>
+                            <input type="text" class="form-control" id="time_allocation" asp-for="Subject.TimeAllocation" required>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="description">Description</label>
+                                <textarea asp-for="Subject.Description" id="details" rows="3" class="form-control" placeholder="Description..."></textarea>
+                            </div>
+                        </div>
+                        <button style="margin-bottom: 20px" type="submit" name="submit" class="btn btn-primary" value="">Save Changes</button>
+                    </form>
+
+                </div>
+
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

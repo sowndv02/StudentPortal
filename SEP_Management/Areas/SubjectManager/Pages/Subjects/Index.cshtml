@@ -1,0 +1,213 @@
+﻿@page
+@model SEP_Management.Areas.SubjectManager.Pages.Subjects.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].SubjectCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].SubjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].TimeAllocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].PassGrade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].UpdatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject[0].Manager)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Subject) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeAllocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassGrade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manager.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.SubjectId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.SubjectId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.SubjectId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
+
+
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="layout-specing">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <!--searchBar-->
+                    <div class="search-bar p-0 d-none d-md-block ms-2 ">
+                        <div id="search" class="menu-search mb-0">
+                            <form method="get" role="search" id="searchform" class="searchform">
+                                <div>
+                                    <input type="text" class="form-control border rounded-pill" id="name" placeholder="Search Keywords...">
+                                    <input type="submit" id="searchsubmit" value="Search">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- End searchbar -->
+                    <!--StartTable-->
+                    <div class="table-responsive bg-white shadow rounded">
+                        <table id="myTable" class="table mb-0 table-center table-bordered">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(1)" class="border-bottom p-3" style="min-width: 180px;">
+                                        Subject Code
+                                    </th>
+                                    <th onclick="sortTable(2)" class="border-bottom p-3" style="min-width: 150px;">
+                                        Subject Name
+                                    </th>
+                                    <th class="border-bottom p-3" style="min-width: 150px;">
+                                        Manager
+                                    </th>
+                                    <th onclick="sortTable(3)" class="border-bottom p-3" style="min-width: 150px;">
+                                        Status
+                                    </th>
+                                    <th class="border-bottom p-3"
+                                        style="min-width: 200px; text-align: center;">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var item in Model.Subject)
+                                {
+                                    <tr>
+                                        <td class="p-3">
+                                            <a href="#" class="text-dark">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="ms-2">
+                                                       @item.SubjectCode
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="p-3">
+                                            @item.SubjectName
+                                        </td>
+                                        <td class="p-3">
+                                            @item.Manager?.FullName
+                                        </td>
+                                        @if(item.IsActive == 1)
+                                        {
+                                            <td><span class="badge bg-soft-success">Active</span></td>
+                                        }
+                                        else
+                                        {
+                                            <td><span class="badge bg-soft-danger">InActive</span></td>
+                                        }
+                                        <td class="text-center p-3">
+                                            <a asp-page="Edit" asp-route-id="@item.SubjectId" class="btn btn-icon btn-pills btn-soft-primary"><i class="uil uil-pen"></i></a>
+                                            @if (item.IsActive == 1)
+                                            {
+                                                <a asp-page="Edit" asp-route-id="@item.SubjectId" asp-page-handler="ChangeStatus" asp-route-status="Active" class="btn btn-icon btn-pills btn-soft-danger" title="Inactivate the subject">
+                                                    <i class="uil uil-times icons"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-page="Edit" asp-route-id="@item.SubjectId" asp-page-handler="ChangeStatus" asp-route-status="InActive" class="btn btn-icon btn-pills btn-soft-success" title="Activate the subject">
+                                                    <i class="uil uil-check icons"></i>
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End Table-->
+                </div>
+            </div>
+        </div>
+        <!-- PAGINATION START -->
+        @* <div class="col-12 mt-4">
+            <div class="d-md-flex align-items-center text-center justify-content-between">
+                <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
+                    <li class="page-item">
+                        <a class="page-link" href=""></a>
+                    </li>
+                </ul>
+            </div>
+        </div> *@
+        <!-- PAGINATION END -->
+    </div>
+</div>

@@ -1,0 +1,296 @@
+﻿@page
+@model SEP_Management.Areas.SubjectManager.Pages.Subjects.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Edit</h1>
+
+<h4>Subject</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Subject.SubjectId" />
+            <div class="form-group">
+                <label asp-for="Subject.SubjectCode" class="control-label"></label>
+                <input asp-for="Subject.SubjectCode" class="form-control" />
+                <span asp-validation-for="Subject.SubjectCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.SubjectName" class="control-label"></label>
+                <input asp-for="Subject.SubjectName" class="form-control" />
+                <span asp-validation-for="Subject.SubjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.ManagerId" class="control-label"></label>
+                <select asp-for="Subject.ManagerId" class="form-control" asp-items="ViewBag.ManagerId"></select>
+                <span asp-validation-for="Subject.ManagerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.IsActive" class="control-label"></label>
+                <input asp-for="Subject.IsActive" class="form-control" />
+                <span asp-validation-for="Subject.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.CreatedBy" class="control-label"></label>
+                <input asp-for="Subject.CreatedBy" class="form-control" />
+                <span asp-validation-for="Subject.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.UpdatedBy" class="control-label"></label>
+                <input asp-for="Subject.UpdatedBy" class="form-control" />
+                <span asp-validation-for="Subject.UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.Description" class="control-label"></label>
+                <input asp-for="Subject.Description" class="form-control" />
+                <span asp-validation-for="Subject.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.TimeAllocation" class="control-label"></label>
+                <input asp-for="Subject.TimeAllocation" class="form-control" />
+                <span asp-validation-for="Subject.TimeAllocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.PassGrade" class="control-label"></label>
+                <input asp-for="Subject.PassGrade" class="form-control" />
+                <span asp-validation-for="Subject.PassGrade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.CreatedAt" class="control-label"></label>
+                <input asp-for="Subject.CreatedAt" class="form-control" />
+                <span asp-validation-for="Subject.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject.UpdatedAt" class="control-label"></label>
+                <input asp-for="Subject.UpdatedAt" class="form-control" />
+                <span asp-validation-for="Subject.UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div> *@
+
+
+
+<style>
+    .table-detail {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .table-detail th,
+        .table-detail td {
+            border: 1px solid #000;
+            /* Thêm viền cho từng cột */
+            padding: 8px;
+            text-align: left;
+        }
+
+            .table-detail th:last-child,
+            .table-detail td:last-child {
+                text-align: left;
+                /* Đặt chú ý cho cột cuối cùng */
+            }
+
+    .card {
+        width: 100%;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    #nav-subject-general {
+        background-color: #007bff; /* Change to your desired background color */
+        color: #fff !important; /* Change to your desired text color */
+        /* Add any other styles you want to apply to the active link */
+    }
+
+    #toast {
+        display: none;
+        position: fixed;
+        top: 150px;
+        right: 60px;
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .horizontal-radio {
+        display: inline-block;
+        margin-right: 20px; /* Thay đổi khoảng cách giữa hai ô radio nếu cần */
+    }
+</style>
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid">
+    <div class="layout-specing">
+        <div class="d-md-flex justify-content-between">
+            <h5 class="mb-0">Subject Details</h5>
+
+            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
+                <ul class="breadcrumb bg-transparent rounded mb-0 p-0">
+                    <li class="breadcrumb-item">
+                        <a href="ClassController">
+                            Subject
+                            List
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="#">
+                            Subject
+                            Details
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+
+        <div class="card bg-white rounded shadow overflow-hidden mt-4 border-0">
+
+            <div class="ms-3 pt-3">
+                 <h3 class="mb-0">@Model.Subject.SubjectCode </h3>
+            </div>
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <div class="card border-0 rounded-0 p-4">
+
+
+                        <!--Tab Content-->
+                        <div class="tab-content p-4"
+                             id="pills-tabContent">
+                            <!--Tab 1-->
+                            <div class="tab-pane fade show active"
+                                 id="pills-overview" role="tabpanel"
+                                 aria-labelledby="overview-tab">
+                                <!--Tab 1 content-->
+                                <!-- JavaScript function to display toast -->
+                                <script type="text/javascript">
+                                    function displayToast(message, isSuccess) {
+                                        var toast = document.getElementById("toast");
+                                        toast.innerHTML = message;
+                                        if (isSuccess) {
+                                            toast.style.backgroundColor = "#4CAF50";  // Green color for success
+                                        } else {
+                                            toast.style.backgroundColor = "#F44336";  // Red color for failure
+                                        }
+                                        toast.style.display = "block";
+                                        setTimeout(function () {
+                                            toast.style.display = "none";
+                                        }, 3000);  // Display the toast for 3 seconds
+                                    }
+                                </script>
+
+                                <!-- HTML element for the toast -->
+                                <div id="toast"></div>
+
+
+
+                                <script type="text/javascript">
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        var urlParams = new URLSearchParams(window.location.search);
+                                        var isSuccess = urlParams.get("success");
+
+                                        if (isSuccess === "true") {
+                                            displayToast("updated successfully!", true);
+                                        } else if (isSuccess === "false") {
+                                            displayToast("Failed to update!", false);
+                                        }
+                                    });
+                                </script>
+                                <form class="mt-4" method="post">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Subject Name</label>
+                                                <input pattern=".{3,20}" title="must be 3 to 20 characters" asp-for="Subject.SubjectName" id="part" type="text" class="form-control" value="@Model.Subject.SubjectName" required="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Subject Code</label>
+                                                <input pattern=".{3,20}" title="must be 3 to 20 characters" asp-for="Subject.SubjectCode" id="weight" type="text" class="form-control" placeholder="" value="@Model.Subject.SubjectCode">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Min grade to pass</label>
+                                                <input asp-for="Subject.PassGrade" id="weight" type="text" class="form-control" placeholder="" value="@Model.Subject.PassGrade">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Status</label>
+                                                <select asp-for="Subject.IsActive" asp-items="ViewBag.Status" required class="form-select" id="">
+                                                    <option value="" hidden="">Select status:</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Manager</label>
+                                                <select asp-for="Subject.ManagerId " asp-items="ViewBag.Managers" required class="form-select" id="">
+                                                    <option value="" hidden="">Select Manager:</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        
+
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Subject Description</label>
+                                                <textarea asp-for="Subject.Description" id="Description" rows="4" class="form-control">@Model.Subject.Description</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" asp-for="Subject.SubjectId" value="@Model.Subject.SubjectId">
+                                    <button type="submit" name="submit" id="update-button" type="button" value="Update" class="btn btn-primary">Confirm</button>
+
+                                </form>
+
+                                <!--End Tab 1 content-->
+                            </div>
+                            <!--end tab 1-->
+                        </div>
+                        <!--End tab content-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

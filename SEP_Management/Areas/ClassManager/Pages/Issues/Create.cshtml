@@ -1,0 +1,172 @@
+﻿@page
+@model SEP_Management.Areas.ClassManager.Pages.Issues.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Create</h1>
+
+<h4>Issue</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Issue.ProjectId" class="control-label"></label>
+                <select asp-for="Issue.ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.MilestoneId" class="control-label"></label>
+                <select asp-for="Issue.MilestoneId" class ="form-control" asp-items="ViewBag.MilestoneId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.TypeId" class="control-label"></label>
+                <select asp-for="Issue.TypeId" class ="form-control" asp-items="ViewBag.TypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.StatusId" class="control-label"></label>
+                <input asp-for="Issue.StatusId" class="form-control" />
+                <span asp-validation-for="Issue.StatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.ProcessId" class="control-label"></label>
+                <input asp-for="Issue.ProcessId" class="form-control" />
+                <span asp-validation-for="Issue.ProcessId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.CreatedBy" class="control-label"></label>
+                <input asp-for="Issue.CreatedBy" class="form-control" />
+                <span asp-validation-for="Issue.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.CreatedAt" class="control-label"></label>
+                <input asp-for="Issue.CreatedAt" class="form-control" />
+                <span asp-validation-for="Issue.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.UpdatedBy" class="control-label"></label>
+                <input asp-for="Issue.UpdatedBy" class="form-control" />
+                <span asp-validation-for="Issue.UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Issue.UpdatedAt" class="control-label"></label>
+                <input asp-for="Issue.UpdatedAt" class="form-control" />
+                <span asp-validation-for="Issue.UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div> *@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" id="theme-opt" />
+
+
+
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+<form class="mt-4" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Title:</label>
+                <input asp-for="Issue.IssueName" type="text" class="form-control" />
+            </div>
+        </div><!--end col-->
+
+        <input type="hidden" asp-for="Issue.ProjectId" value="@Model.Project.ProjectId" />
+
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Status:</label>
+                <select asp-for="Issue.StatusId" asp-items="ViewBag.Status" required class="form-select" id="">
+                    <option value="" hidden="">Select status:</option>
+                </select>
+            </div>
+        </div><!--end col-->
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Process:</label>
+                <select asp-for="Issue.ProcessId" asp-items="ViewBag.Process" class="form-select" id="">
+                    <option value="" hidden="">Select Process:</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label class="form-label">Milestone:</label>
+                <select asp-for="Issue.MilestoneId" asp-items="ViewBag.Milestones"  class="form-select" id="">
+                    <option value="" hidden="">Select Milestone:</option>
+                </select>
+            </div>
+        </div>
+
+        @* <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Assignee:</label>
+                <select asp-for="Issue.AssigneeId" asp-items="ViewBag.Assignees" class="form-select" id="">
+                    <option value="" hidden="">Select Assignee:</option>
+                </select>
+            </div>
+        </div> *@
+
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Labels:</label>
+                <select asp-for="Issue.IssueLabels" asp-items="ViewBag.Labels" class="form-select" id="" multiple>
+                    <option value="" hidden="">Select Label:</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="form-label">Description:</label>
+                <textarea asp-for="Issue.Description" id="comments" rows="4" class="form-control"></textarea>
+            </div>
+        </div>
+    </div><!--end row-->
+
+    <div class="row">
+        <div class="col-sm-12 col-md-9">
+            <a asp-page="Index" name="submit" class="btn btn-primary">Back</a>
+        </div><!--end col-->
+        <div class="col-sm-12 col-md-3">
+            <button style="float:right" type="submit" name="submit" class="btn btn-success">Save changes</button>
+        </div>
+    </div><!--end row-->
+</form>
+
+<script>
+
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

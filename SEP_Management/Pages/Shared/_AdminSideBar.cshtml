@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SEP_Management.Models
+@using Microsoft.AspNetCore.Authorization
+@inject SignInManager<User> SignInManager
+
+
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
+
+<nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content" data-simplebar style="height: calc(100% - 60px);">
+        <div class="sidebar-brand  ">
+            <a href="/" class="d-flex justify-content-center">
+                <img src="~/assests/images/logo.png" width="140" height="60" class="logo-light-mode" alt="">
+            </a>
+        </div>
+@if (SignInManager.IsSignedIn(User))
+{
+            if ((await authorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
+            {
+                <ul class="sidebar-menu pt-3">
+
+                    <li><a asp-area="Admin" asp-page="/Users/Index"><i class="uil uil-user me-2 d-inline-block"></i>User Management</a></li>
+                    <li><a asp-area="Admin" asp-page="/Subjects/Index"><i class="uil uil-book-alt me-2 d-inline-block"></i>Subject Management</a></li>
+                    <li><a asp-area="Admin" asp-page="/Classes/Index"><i class="uil uil-users-alt me-2 d-inline-block"></i>Class Management</a></li>
+                    <li><a asp-area="Admin" asp-page="/Projects/SelectClass"><i class="uil uil-clipboard-notes me-2 d-inline-block"></i>Project Management</a></li>
+                    <li><a asp-area="Admin" asp-page="/SystemSettings/Index"><i class="uil uil-setting me-2 d-inline-block"></i>Setup System Settings</a></li>
+                </ul>
+            }
+            else if ((await authorizationService.AuthorizeAsync(User, "Subject Manager")).Succeeded)
+            {
+                <ul class="sidebar-menu pt-3">
+                    <li><a asp-area="SubjectManager" asp-page="/Subjects/Index"><i class="uil uil-book-alt me-2 d-inline-block"></i>Subject Management</a></li>
+                    <li><a asp-area="SubjectManager" asp-page="/Classes/Index"><i class="uil uil-users-alt me-2 d-inline-block"></i>Class Management</a></li>
+                    <li><a asp-area="SubjectManager" asp-page="/Projects/SelectClass"><i class="uil uil-clipboard-notes me-2 d-inline-block"></i>Project Management</a></li>
+                </ul>
+            }
+            else if ((await authorizationService.AuthorizeAsync(User, "Class Manager")).Succeeded)
+            {
+                <ul class="sidebar-menu pt-3">
+                    <li><a asp-area="ClassManager" asp-page="/Classes/Index"><i class="uil uil-users-alt me-2 d-inline-block"></i>Class Management</a></li>
+                    <li><a asp-area="ClassManager" asp-page="/Projects/SelectClass"><i class="uil uil-clipboard-notes me-2 d-inline-block"></i>Project Management</a></li>
+                </ul>
+            }
+            else if ((await authorizationService.AuthorizeAsync(User, "Project Manager")).Succeeded)
+            {
+                <ul class="sidebar-menu pt-3">
+                    <li><a href="ManageProjectController"><i class="uil uil-clipboard-notes me-2 d-inline-block"></i>Project Management</a></li>
+                </ul>
+            }
+            else if ((await authorizationService.AuthorizeAsync(User, "Student")).Succeeded)
+            {
+                <ul class="sidebar-menu pt-3">
+                    <li><a asp-page="/Projects/SelectClass"><i class="uil uil-clipboard-notes me-2 d-inline-block"></i>Dashboard</a></li>
+                </ul>
+            }
+}
+        </div>
+    </nav>

@@ -1,0 +1,204 @@
+﻿@page
+@model SEP_Management.Areas.Admin.Pages.RoleClaims.IndexModel
+@{
+    ViewData["Title"] = "Claim for:" + Model.Role.Name;
+}
+
+<h1>Role: @Model.Role.Name</h1>
+
+@* <p>
+    <a asp-page="Create" asp-route-roleid="@Model.role.Id">Add Claim</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>
+                @Html.DisplayNameFor(model => model.claims[0].ClaimType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.claims[0].ClaimValue)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.claims)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClaimType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClaimValue)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-roleid="@Model.role.Id" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Delete" asp-route-roleid="@Model.role.Id" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+
+
+
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="container-fluid">
+    <div class="layout-specing">
+        <div class="row">
+            <div class="col-xl-9 col-lg-6 col-md-4">
+                <h5 class="mb-0">Claims for System Setting</h5>
+                <nav aria-label="breadcrumb" class="d-inline-block mt-2">
+                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                        <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/SystemSettings/Index">Manage System Setting</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Claims </li>
+                    </ul>
+                </nav>
+            </div><!--end col-->
+
+            <div class="col-xl-3 col-lg-6 col-md-8 mt-4 mt-md-0">
+                <div class="justify-content-md-end">
+                    <form>
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="mb-0 position-relative">
+                                </div>
+                            </div><!--end col-->
+
+                            <div class="col-sm-12 col-md-7 mt-4 mt-sm-0">
+                                <div class="d-grid">
+                                    <a asp-page="./Create" asp-route-roleId="@Model.Role.Id" class="btn btn-primary">Add Claim</a>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div><!--end row-->
+                    </form><!--end form-->
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="row">
+            <div class="col-12 mt-4">
+                <div class="table-responsive">
+                    <table class="  table  bg-white mb-0 table-hover table-bordered" id="myTable">
+                        <thead class="">
+                            <tr>
+                                <th class="border-bottom p-3" onclick="sortTable(0)" style="cursor: pointer">Claim Id<i class="uil uil-sort"></i></th>
+                                <th class="border-bottom p-3" onclick="sortTable(1)" style="cursor: pointer" style="min-width: 180px;">Claim Type<i class="uil uil-sort"></i></th>
+                                <th class="border-bottom p-3">Claim Value</th>
+                                <th class="border-bottom p-3" style="min-width: 100px;">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="">
+                            @foreach (var item in Model.claims)
+                            {
+                                <tr>
+                                    <td class="p-3">@Html.DisplayFor(modelItem => item.Id)</td>
+                                    <td class="p-3">
+                                        @Html.DisplayFor(modelItem => item.ClaimType)
+                                    </td>
+                                    <td class="p-3">@Html.DisplayFor(modelItem => item.ClaimValue)</td>
+                                    
+                                    <td class="p-3">
+                                        <a asp-page="./Edit"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-icon btn-pills btn-soft-primary"
+                                           title="Update">
+                                            <i class="uil uil-pen"></i>
+                                        </a>
+                                        <a data-bs-toggle="modal"
+                                           data-bs-target="#confirmChangeStatus-@item.Id"
+                                           class="btn btn-icon btn-pills btn-soft-danger"
+                                           title="Remove Claims">
+                                            <i class="uil uil-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <div class="modal" id="confirmChangeStatus-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg w modal-dialog-centered " style="width:400px;">
+                                        <div class="modal-content p-3">
+
+                                            <div class="modal-body border-0 text-center p-2">
+                                                <h1 class="text-danger display-1"><i class="ri-close-circle-line"></i></h1>
+                                                <h4 class="modal-title" id="confirmDelete">Are you sure</h4>
+                                                <p>Do you really want to remove of this claim? This process cannot be undone.</p>
+                                            </div>
+                                            <div class="modal-footer border-0 align-items-center justify-content-center">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-page="Index" asp-page-handler="Delete" method="post">
+                                                    <input type="hidden" asp-for="Claim.Id" value="@item.Id" />
+                                                    <input type="hidden" asp-for="Role.Id" value="@Model.Role.Id" />
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a asp-area="Admin" class="mt-5 btn btn-primary" asp-page="/SystemSettings/Index">Back</a>
+
+
+
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("myTable");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+    </script>
+

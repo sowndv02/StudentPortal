@@ -1,0 +1,211 @@
+﻿@page
+@model SEP_Management.Areas.SubjectManager.Pages.Projects.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@* <h1>Create</h1>
+
+<h4>Project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectCode" class="control-label"></label>
+                <input asp-for="Project.ProjectCode" class="form-control" />
+                <span asp-validation-for="Project.ProjectCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectEnName" class="control-label"></label>
+                <input asp-for="Project.ProjectEnName" class="form-control" />
+                <span asp-validation-for="Project.ProjectEnName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectVieName" class="control-label"></label>
+                <input asp-for="Project.ProjectVieName" class="form-control" />
+                <span asp-validation-for="Project.ProjectVieName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectDescription" class="control-label"></label>
+                <input asp-for="Project.ProjectDescription" class="form-control" />
+                <span asp-validation-for="Project.ProjectDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.Status" class="control-label"></label>
+                <input asp-for="Project.Status" class="form-control" />
+                <span asp-validation-for="Project.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.CreatedBy" class="control-label"></label>
+                <input asp-for="Project.CreatedBy" class="form-control" />
+                <span asp-validation-for="Project.CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.UpdatedBy" class="control-label"></label>
+                <input asp-for="Project.UpdatedBy" class="form-control" />
+                <span asp-validation-for="Project.UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ClassId" class="control-label"></label>
+                <select asp-for="Project.ClassId" class ="form-control" asp-items="ViewBag.ClassId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.GroupName" class="control-label"></label>
+                <input asp-for="Project.GroupName" class="form-control" />
+                <span asp-validation-for="Project.GroupName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.MentorId" class="control-label"></label>
+                <input asp-for="Project.MentorId" class="form-control" />
+                <span asp-validation-for="Project.MentorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.CoMentorId" class="control-label"></label>
+                <input asp-for="Project.CoMentorId" class="form-control" />
+                <span asp-validation-for="Project.CoMentorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.AccessToken" class="control-label"></label>
+                <input asp-for="Project.AccessToken" class="form-control" />
+                <span asp-validation-for="Project.AccessToken" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.Url" class="control-label"></label>
+                <input asp-for="Project.Url" class="form-control" />
+                <span asp-validation-for="Project.Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.CreatedAt" class="control-label"></label>
+                <input asp-for="Project.CreatedAt" class="form-control" />
+                <span asp-validation-for="Project.CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.UpdatedAt" class="control-label"></label>
+                <input asp-for="Project.UpdatedAt" class="form-control" />
+                <span asp-validation-for="Project.UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div> *@
+<!-- Loader -->
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+<div class="container-fluid">
+    <form class="mt-4" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Class Code:</label>
+                    <select asp-for="Project.ClassId" asp-items="@ViewBag.ClassLists" name="class_id" class="form-select" id="">
+                    </select>
+                </div>
+            </div><!--end col-->
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Status:</label>
+                    <input asp-for="Project.Status" type="text" class="form-control" readonly value="InActive" />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Group Name:</label>
+                    <input required="" asp-for="Project.GroupName" pattern=".{2,20}" title="Between 1 to 20 characters" type="text" class="form-control">
+                </div>
+            </div><!--end col-->
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Project Code:</label>
+                    <input required="" asp-for="Project.ProjectCode" pattern=".{3,10}" title="Between 3 to 10 characters" type="text" class="form-control">
+                </div>
+            </div><!--end col-->
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">English Name:</label>
+                    <input required="" asp-for="Project.ProjectEnName" pattern=".{5,30}" title="Between 5 to 30 characters" type="text" class="form-control">
+                </div>
+            </div><!--end col-->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Vietnamese Name:</label>
+                    <input required="" asp-for="Project.ProjectVieName" pattern=".{5,30}" title="Between 5 to 30 characters" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Url:</label>
+                    <input required="" asp-for="Project.Url" type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">AccessToken:</label>
+                    <input required="" asp-for="Project.AccessToken" type="password" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Mentor:</label>
+                    <select asp-for="Project.MentorId" asp-items="ViewBag.MentorList" required name="Mentor_id" class="form-select" id="">
+                        <option value="" hidden="">Select mentor</option>
+                    </select>
+                </div>
+            </div><!--end col-->
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Co-mentor:</label>
+                    <select asp-for="Project.CoMentorId" asp-items="ViewBag.MentorList" required name="Co-mentor_id" class="form-select" id="">
+                        <option value="" hidden="">Select co-mentor</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+            </div>
+
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label class="form-label">Description:</label>
+                    <textarea asp-for="Project.ProjectDescription" id="comments" rows="4" class="form-control"></textarea>
+                </div>
+            </div>
+        </div><!--end row-->
+
+        <div class="row">
+            <div class="col-sm-12 col-md-9">
+                <a asp-page="Index" name="submit" class="btn btn-primary">Back</a>
+            </div><!--end col-->
+            <div class="col-sm-12 col-md-3">
+                <button style="float:right" type="submit" name="submit" class="btn btn-success">Save changes</button>
+            </div>
+        </div><!--end row-->
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

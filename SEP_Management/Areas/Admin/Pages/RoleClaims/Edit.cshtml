@@ -1,0 +1,43 @@
+﻿@page
+@model SEP_Management.Areas.Admin.Pages.RoleClaims.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>RoleClaim</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RoleClaim.Id" />
+            <input type="hidden" asp-for="RoleClaim.RoleId" value="@Model.Role.Id" />
+            <div class="form-group">
+                <label asp-for="RoleClaim.ClaimType" class="control-label"></label>
+                <input asp-for="RoleClaim.ClaimType" class="form-control" />
+                <span asp-validation-for="RoleClaim.ClaimType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleClaim.ClaimValue" class="control-label"></label>
+                <input asp-for="RoleClaim.ClaimValue" class="form-control" />
+                <span asp-validation-for="RoleClaim.ClaimValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index" asp-route-roleId="@Model.Role.Id">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

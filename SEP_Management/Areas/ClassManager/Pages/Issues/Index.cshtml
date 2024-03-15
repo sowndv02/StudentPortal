@@ -1,0 +1,326 @@
+﻿@page
+@model SEP_Management.Areas.ClassManager.Pages.Issues.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@* 
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].StatusId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].ProcessId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].UpdatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].Milestone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].Project)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Issue[0].Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Issue) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProcessId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Milestone.MilestoneId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.ProjectId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type.SettingId)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.IssueId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.IssueId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.IssueId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+
+<style>
+    #nav-class-setting {
+        background-color: #007bff; /* Change to your desired background color */
+        color: #fff !important; /* Change to your desired text color */
+        /* Add any other styles you want to apply to the active link */
+    }
+
+    #toast {
+        display: none;
+        position: fixed;
+        top: 100px;
+        right: 50px;
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+    }
+</style>
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="layout-specing">
+
+
+        <div class="row mb-3">
+            <div class="col-xl-9 col-md-6">
+                <h5 class="mb-0">Project Management</h5>
+
+                <nav aria-label="breadcrumb" class="d-inline-block mt-2">
+                    <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="">Project Management</a></li>
+                        <li class="breadcrumb-item"><a href="ManageProjectController">Select Class</a></li>
+                        <li class="breadcrumb-item "><a href="ManageProjectController?service=ProjectList&class_id=${class_id}">Project List</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Project Details</li>
+                    </ul>
+                </nav>
+            </div><!--end col-->
+        </div>
+        <div class="bg-white component-wrapper border-0 rounded shadow">
+            <div class="p-4 border-bottom">
+                <h5 class="mb-0"> Project details </h5>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card border-0 rounded-0 p-4">
+                        <!--searchBar-->
+                        <div class="row ">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <ul class="nav nav-pills nav-justified flex-column flex-sm-row rounded" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link rounded" href="ManageProjectController?service=updateProject&project_id=<%=projectID%>&class_id=<%=classID%>" role="tab" aria-controls="pills-smart" aria-selected="false">
+                                                <div class="text-center pt-1 pb-1">
+                                                    <h4 class="title font-weight-normal mb-0">General</h4>
+                                                </div>
+                                            </a><!--end nav link-->
+                                        </li><!--end nav item-->
+                                        <li class="nav-item">
+                                            <a class="nav-link rounded" href="ManageProjectController?service=listMilestones&project_id=<%=rsProject.getString(1)%>" role="tab" aria-controls="pills-smart" aria-selected="false">
+                                                <div class="text-center pt-1 pb-1">
+                                                    <h4 class="title font-weight-normal mb-0">Milestone</h4>
+                                                </div>
+                                            </a><!--end nav link-->
+                                        </li><!--end nav item-->
+
+                                        <li class="nav-item">
+                                            <a class="nav-link rounded" href="IssueSettingController?service=ListProjectIssue&projectID=<%=rsProject.getString(1)%>" role="tab" aria-controls="pills-apps" aria-selected="false">
+                                                <div class="text-center pt-1 pb-1">
+                                                    <h4 class="title font-weight-normal mb-0">Setting</h4>
+                                                </div>
+                                            </a><!--end nav link-->
+                                        </li><!--end nav item-->
+
+                                        <li class="nav-item">
+                                            <a class="nav-link rounded active" id="pills-cloud-tab" data-bs-toggle="pill" href="IssueSettingController?service=displayProjectSetting&projectID=<%=rsProject.getString(1)%>&mode=project" role="tab" aria-controls="pills-cloud" aria-selected="true">
+                                                <div class="text-center pt-1 pb-1">
+                                                    <h4 class="title font-weight-normal mb-0">Issue</h4>
+                                                </div>
+                                            </a><!--end nav link-->
+                                        </li><!--end nav item-->
+                                    </ul><!--end nav pills-->
+                                </div><!--end col-->
+                            </div><!--end row-->
+                            <!-- Search -->
+                            <div class="col-md-6 mt-4">
+                                <div style="float: left; margin-bottom: 20px " class="d-grid">
+                                    <button class="btn btn-success mb-3" title="Sync" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                        <i class="uil uil-sync icons"></i> Sync with GitLab
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mt-4">
+                                <div style="float: right; margin-bottom: 20px " class="d-grid">
+                                    <a class="btn btn-primary" asp-page="Create" asp-route-projectId="@Model.Project.ProjectId">Add new issue</a>
+                                </div>
+                            </div>
+                            <!--end col-->
+                        </div>
+                        <!-- End filter -->
+                        <!--StartTable-->
+                        <script type="text/javascript">
+                            function displayToast(message, isSuccess) {
+                                var toast = document.getElementById("toast");
+                                toast.innerHTML = message;
+                                if (isSuccess) {
+                                    toast.style.backgroundColor = "#4CAF50";  // Green color for success
+                                } else {
+                                    toast.style.backgroundColor = "#F44336";  // Red color for failure
+                                }
+                                toast.style.display = "block";
+                                setTimeout(function () {
+                                    toast.style.display = "none";
+                                }, 2000);  // Display the toast for 3 seconds
+                            }
+                        </script>
+                        <div id="toast"></div>
+                        <div class="table-responsive bg-white shadow rounded">
+                            <script type="text/javascript">
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var urlParams = new URLSearchParams(window.location.search);
+                                    var success = urlParams.get("success");
+                                    if (success === "true") {
+                                        displayToast("updated successfully!", true);
+                                    } else if (success === "false") {
+                                        displayToast("Failed to update!", false);
+                                    } else if (success === "true1") {
+                                        displayToast("Added successfully!", true);
+                                    } else if (success === "false1") {
+                                        displayToast("Failed to add!", false);
+                                    }
+                                });
+                            </script>
+                            <div class="tab-pane fade show active">
+                                <table class="table mb-0 table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-bottom p-3" style="min-width: 150px;">Project Code</th>
+                                            <th class="border-bottom p-3" style="min-width: 150px;">Title</th>
+                                            <th class="border-bottom p-3" style="min-width: 150px;">Due Date</th>
+                                            <th class="border-bottom p-3" style="min-width: 150px;">Type</th>
+                                            <th class="border-bottom p-3" style="min-width: 100px;">Process</th>
+                                            <th class="border-bottom p-3" style="min-width: 100px;">Status</th>
+                                            <th class="border-bottom p-3" style="min-width: 150px; text-align: center;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Issue)
+                                        {
+                                            <tr>
+                                                <td class="p-3">@item.Project?.ProjectCode</td>
+                                                <td class="p-3">@item.IssueName</td>
+                                                <td class="p-3">@item.DueDate</td>
+                                                <td class="p-3">@(item.IssueType == 1 ? "Issue" : "Incident")</td>
+                                                <td class="p-3">@(item.ProcessId == 1 ? "Open" : "Close")</td>
+                                                @if (item.StatusId == 1)
+                                                {
+                                                    <td><span style="font-size: 15px" class="badge bg-soft-success">Active</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span style="font-size: 14px" class="badge bg-soft-danger">InActive</span></td>
+                                                }
+                                                <td class="text-center p-3">
+                                                    <a asp-page="Edit" asp-route-id="@item.IssueId" class="btn btn-icon btn-pills btn-soft-primary"><i class="uil uil-pen"></i></a>
+                                                    @if (item.StatusId == 1)
+                                                    {
+                                                        <a asp-page="Edit" asp-route-id="@item.IssueId" asp-page-handler="ChangeStatus" asp-route-status="Active"
+                                                           class="btn btn-icon btn-pills btn-soft-danger" title="In active the project setting"> <i class="uil uil-times icons"></i></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a asp-page="Edit" asp-route-id="@item.IssueId" asp-page-handler="ChangeStatus" asp-route-status="InActive"
+                                                           class="btn btn-icon btn-pills btn-soft-success" title="Active the project setting">
+                                                            <i class="uil uil-check icons"></i>
+                                                        </a>
+                                                    }
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="p-2">
+                            <form id="syncForm" asp-page="Edit" asp-page-handler="SyncGitLab" method="post">
+                                <label class="form-label">Gitlab URL:</label>
+                                <input asp-for="Project.Url" readonly="" id="gitUrl" type="text"
+                                       class="form-control" placeholder="Enter your Gitlab URL here..."
+                                       value="@Model.Project.Url"
+                                       required>
+                                <label readonly="" class="form-label">Access Token:</label>
+                                <input asp-for="Project.AccessToken" readonly="" id="accessToken" type="password"
+                                       class="form-control" placeholder="Enter your Access Token here..."
+                                       value="@Model.Project.AccessToken"
+                                       required>
+                                <input type="hidden" asp-for="Project.ProjectId" value="@Model.Project.ProjectId" />
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" id="SyncAction">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+        document.getElementById("SyncAction").addEventListener("click", function () {
+            document.getElementById("preloader").style.display = "block";
+            document.getElementById("syncForm").submit();
+        });
+    </script>

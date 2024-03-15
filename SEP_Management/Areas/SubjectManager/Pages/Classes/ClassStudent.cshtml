@@ -1,0 +1,211 @@
+﻿@page
+@model SEP_Management.Areas.SubjectManager.Pages.Classes.ClassStudentModel
+@{
+}
+
+
+<div id="preloader">
+    <div id="status">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+<!-- Loader -->
+
+<div class="container-fluid">
+    <div class="layout-specing">
+        <div class="d-md-flex justify-content-between">
+            <h5 class="mb-0">Assigned Class Setting</h5>
+            <nav aria-label="breadcrumb" class="d-inline-block mt-4 mt-sm-0">
+                <ul class="breadcrumb breadcrumb-muted bg-transparent rounded mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="classManager">Assigned Classes Management</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Class Students</li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="card bg-white rounded shadow overflow-hidden mt-4 border-0">
+
+            <div class="avatar-profile d-flex margin-nagative mt-n5 position-relative ps-3">
+                <div class="mt-4 ms-3 pt-3 w-75 d-flex">
+                    <h3 class="mt-3">@Model.Class.ClassCode</h3>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-12">
+                    <div class="card border-0 rounded-0 p-2">
+
+                        <div class="row w-100 align-items-center">
+                            <div class="col-md-7">
+                                <!-- Filter 1 -->
+                                <form action="classManager" method="GET" id="sortForm">
+                                    <!-- Hidden input fields for additional parameters -->
+                                    <input type="hidden" name="mode" value="classStudent">
+                                    <input type="hidden" name="sortType" value="">
+                                    <input type="hidden" name="classId" value="${assignClass.classId}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select class="form-select" id="filter1" onchange="sortForm('project')" name="sortVal">
+                                                <option value="" hidden="">Filter Groups</option>
+                                                <option value="">All Groups</option>
+                                                
+                                                <option value="<%=listProject.getInt(" project_id")%>"></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-select" id="filter2" name="sortVal1" onchange="sortForm('status')">
+                                                <option value="" hidden="">Filter Status</option>
+                                                <option value="">All Statuses</option>
+                                                <option value="1">Active</option>
+                                                <option value="0">In Active</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Dropdown Menu -->
+                            <div class="col-sm-12 col-md-2 mt-3 mt-sm-0">
+                                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Import with Excel File
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" asp-page="ClassStudent" asp-page-handler="getTemplate">Download template</a>
+                                    <a class="dropdown-item" href="#" id="importLink">Import excel file</a>
+
+                                    <form id="uploadForm" asp-page="ClassStudent" asp-page-handler="Import" method="post" enctype="multipart/form-data" style="display:none;">
+                                        <input type="hidden" asp-for="Class.ClassId" value="@Model.Class.ClassId">
+                                        <input type="file" id="fileUpload" asp-for="FileUpload" style="display:none;" />
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-content mt-2" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-overview" role="tabpanel"
+                                 aria-labelledby="overview-tab">
+                                <table id="myTable" class="table mb-0 table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th onclick="sortTable(1)" class="border-bottom p-3" style="min-width: 180px; cursor: pointer">
+                                                Student Name<i class="fas fa-sort"></i>
+                                            </th>
+                                            <th onclick="sortTable(2)" class="border-bottom p-3 " style="min-width: 150px; cursor: pointer">
+                                                Group<i class="fas fa-sort"></i>
+                                            </th>
+                                            <th onclick="sortTable(3)" class="border-bottom p-3" style="min-width: 150px; cursor: pointer">
+                                                Status<i class="fas fa-sort"></i>
+                                            </th>
+                                            <th class="border-bottom p-3" style="min-width: 100px;">Actions</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var item in Model.ClassStudents)
+                                        {
+                                            <tr>
+                                                <td class="p-3">
+                                                    @item.Student?.FullName
+                                                </td>
+                                                <td class="p-3">
+                                                    @item.Project?.ProjectCode
+                                                </td>
+                                                @if(item.IsActive == 1)
+                                                {
+                                                    <td class="p-3 text-success">Active</td>
+                                                }else{
+                                                    <td class="p-3 text-danger">InActive</td>
+                                                }
+                                                <td>
+                                                    <button onclick="updateStudent(@item.ClassId, @item.ClassStId, @item.ProjectId)"
+                                                            class="btn btn-icon btn-pills btn-soft-primary">
+                                                        <i class="uil uil-eye"></i>
+                                                    </button>
+                                                    @if(item.IsActive == 1)
+                                                    {
+                                                        <a href="classManager?mode=classStudent&option=changeStatus&classId=${classSt.classId}&stId=${classSt.id}&status=0" class="btn btn-icon btn-pills btn-soft-danger" title="Inactive" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                                            <i class="uil uil-times icons"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="classManager?mode=classStudent&option=changeStatus&classId=${classSt.classId}&stId=${classSt.id}&status=1" class="btn btn-icon btn-pills btn-soft-success" title="Active" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+                                                            <i class="uil uil-check icons"></i>
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                        
+                                    </tbody>
+                                </table>
+
+                                @* <div class="row text-center">
+                                    <div class="col-12 mt-4">
+                                        <div class="d-md-flex align-items-center text-center justify-content-between">
+                                            <span class="text-muted me-3"></span>
+                                            <ul class="pagination justify-content-center mb-0 mt-3 mt-sm-0">
+                                                <c:forEach begin="1" end="${endP}" var="i">
+                                                    <li class="page-item"><a class="page-link" href="classManager?mode=classStudent&classId=${assignClass.classId}&index=${i}&sortType=${sortType}&sortValue=${sortValue}">${i}</a></li>
+                                                </c:forEach>
+                                            </ul>
+                                        </div>
+                                    </div><!--end col-->
+                                </div> *@
+                            </div><!--end teb pane-->
+                        </div><!--end tab content-->
+                    </div>
+                </div><!--end col-->
+            </div><!--end row-->
+        </div>
+    </div>
+</div><!--end container-->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to save changes?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="addStudentModal" tabindex="-1" role="dialog" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Add New Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modal-list-student">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitAddForm()" id="addStudentBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateStudentModal" tabindex="-1" role="dialog" aria-labelledby="updateStudentModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Update Student</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modal-update-student">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitUpdateForm()" id="addStudentBtn">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
